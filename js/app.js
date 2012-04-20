@@ -2,7 +2,8 @@ var root = window;
 
 root.MovieRadar = root.MovieRadar || {};
 root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
-    var channel = _.extend({}, Backbone.Events);
+
+    var dispatcher = _.clone(Backbone.Events);
 
     var TemplatedView = {
         makeVisible: function(selector) {
@@ -32,25 +33,34 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
 
         requestList: function() {
 
-            channel.trigger('list:show');
+            dispatcher.trigger('list:show');
         }
     }));
     var ListView = Backbone.View.extend(_.extend(TemplatedView, {
         initialize: function() {
             
             var view = this;
-            channel.on("list:show", function() {
+            dispatcher.on("list:show", function() {
 
                 view.makeVisible(view.el)
             });
         }
     }));
-    var RadarView = Backbone.View.extend(TemplatedView);
+    var RadarView = Backbone.View.extend(_.extend(TemplatedView, {
+        initialize: function() {
+            
+            var view = this;
+            dispatcher.on("radar:show", function() {
+
+                view.makeVisible(view.el)
+            });
+        }
+    }));
 
     var Navigation = Backbone.Router.extend({
         initialize: function() {
             
-            channel.on("app:ready", function() {
+            dispatcher.on("app:ready", function() {
 
                 Backbone.history.start();    
             })
