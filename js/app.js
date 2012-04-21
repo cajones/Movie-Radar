@@ -7,7 +7,6 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
 
     var TemplatedView = {
         makeVisible: function(selector) {
-            logger.log('scroll');
 
             if(selector === undefined)
                 selector = this.el;
@@ -21,21 +20,13 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
         },
     
         render: function() {
+            
             var template = Handlebars.compile($(this.options.templateSelector).html());
             $(this.el).html(template({}));
         }        
     };
 
-    var WelcomeView = Backbone.View.extend(_.extend(TemplatedView, {
-        events: {
-            'click  .btn'   :   'requestList'
-        },
-
-        requestList: function() {
-
-            dispatcher.trigger('list:show');
-        }
-    }));
+    var WelcomeView = Backbone.View.extend(TemplatedView);
     var ListView = Backbone.View.extend(_.extend(TemplatedView, {
         initialize: function() {
             

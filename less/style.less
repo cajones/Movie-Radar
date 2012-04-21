@@ -8,7 +8,30 @@ body {
 @import "bootstrap/responsive.less";
 
 
+
+
 /* ===== Primary Styles ========================================================
    Author: Chris Jones
    ========================================================================== */
 
+/* Radar scanner */
+@scanner-near: #1a6e05;
+@scanner-far: darken(@scanner-near, 50%);
+.scanner {
+    height: 230px;
+
+    border: 1px solid black;
+    background-image: -webkit-gradient(linear, left center, right center, from(@scanner-near), to(@scanner-far));
+    background-image: -webkit-linear-gradient(left, @scanner-near, @scanner-far);
+    background-image: -moz-linear-gradient(left, @scanner-near, @scanner-far);
+    background-image: -o-linear-gradient(left, @scanner-near, @scanner-far);
+    background-image: -ms-linear-gradient(left, @scanner-near, @scanner-far);
+    background-image: linear-gradient(to right, @scanner-near, @scanner-far);
+    -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+    box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+}
+
+/* LESS overrides */
+@linkColor: darken(@scanner-near, 10%);
+@linkColorHover: lighten(@linkColor, 10%);

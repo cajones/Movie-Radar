@@ -1,0 +1,44 @@
+{
+    
+    "movies" : [
+        {
+            "title"    : "The Hobbit: An Unexpected Journey" ,
+            "synopsis" : "A curious Hobbit, Bilbo Baggins, journeys to the Lonely Mountain with a vigorous group of Dwarves to reclaim a treasure stolen from them by the dragon Smaug.",
+            "director" : "Peter Jackson",
+            "stars"    : ["Martin Freeman", "Ian McKellen", "Richard Armitage", "Andy Serkis"],
+            "release"  : "14 December 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTM2ODkyNjg5N15BMl5BanBnXkFtZTcwMDc5MTgxNw@@._V1._SY317_CR0,0,214,317_.jpg"
+        },
+        {
+            "title"    : "Avengers Assemble",
+            "synopsis" : "Nick Fury of S.H.I.E.L.D. brings together a team of super humans to form The Avengers to help save the Earth from Loki and his army.",
+            "director" : "Joss Whedon",
+            "stars"    : ["Robert Downey Jr.", "Chris Evans", "Scarlett Johansson", "Jeremy Renner", "Chris Hemworth"],
+            "release"  : "26 April 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1._SY317_CR0,0,214,317_.jpg"
+        },
+        {
+            "title"    : "The Dark Knight Rises",
+            "synopsis" : "Eight years after Batman took the fall for Two Face's crimes, a new terrorist leader, Bane overwhelms Gotham's finest, and the Dark Knight resurfaces to protect a city that brands him an enemy.",
+            "director" : "Christopher Nolan",
+            "stars"    : ["Christian Bale", "Joseph Gordon-Levitt" ,"Gary Oldman"],
+            "release"  : "20 July 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTY0MTc2OTUwNV5BMl5BanBnXkFtZTcwNjk4NjQxNw@@._V1._SY317_CR0,0,214,317_.jpg"
+        },
+        {
+            "title"    : "Prometheus",
+            "synopsis" : "A team of explorers discover a clue to the origins of mankind on Earth, leading them on a journey to the darkest corners of the universe. There, they must fight a terrifying battle to save the future of the human race.",
+            "director" : "Ridley Scott",
+            "stars"    : ["Noomi Rapace", "Charlize Theron", "Patrick Wilson", "Idris Elba", "Guy Pearce"],
+            "release"  : "6 June 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTk5OTY4MDQ2OV5BMl5BanBnXkFtZTcwMjU1MDYxNw@@._V1._SY317_.jpg"
+        }
+        /*{
+            "title"    : "",
+            "synopsis" : "",
+            "director" : "",
+            "stars"    : [],
+            "release"  : ""
+        },*/
+    ]
+}
