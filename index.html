@@ -54,6 +54,21 @@
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
 <script src="js/libs/bootstrap/bootstrap.min.js"></script>
 <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
+<script>
+    Handlebars.registerHelper('floor', function(value) {
+        return Math.floor(value);
+    });
+    Handlebars.registerHelper("each_with_index", function(array, fn) {
+        if(!array) return;
+        var buffer = "";
+        for (var i = 0, j = array.length; i < j; i++) {
+            var item = array[i];
+            item.index = i+1;
+            buffer += fn(item);
+        }
+        return buffer;
+    });
+</script>
 <script src="js/libs/underscore-min.js"></script>
 <script src="js/libs/backbone-min.js"></script>
 <!-- /libs -->
@@ -69,17 +84,17 @@
 <script id="movie-radar-view-template" type="text/x-handlebars-template">
     <div class="scanner">
         <ul>
-        {{#each movies}}
-            <li>{{title}}</li>
-        {{/each}}
+        {{#each_with_index movies}}
+            <li style="margin-left: {{floor countdown}}px;"><a href="#list/{{index}}">{{title}}</a></li>
+        {{/each_with_index}}
         </ul>
     </div>
 </script>
 
 <script id="movie-list-view-template" type="text/x-handlebars-template">
     <h2>Releases for 2012</h2> 
-    {{#each movies}}
-    <article>
+    {{#each_with_index movies}}
+    <article id="movie-{{index}}">
         <div class="row">
             <div class="span2">
                 <ul class="thumbnails">
@@ -91,20 +106,24 @@
             <div class="span8">
                 <h3>{{title}}</h3>
                 <p>{{synopsis}}</p>
-                <label class="label">Director</label><span class="person">{{director}}</span> 
+                <label class="label">Director</label><a class="person" href="http://en.wikipedia.org/wiki/{{director}}" target="_blank">{{director}}</a> 
                 <label class="label">Stars</label>
                 {{#each stars}}
-                    <span class="person">{{this}}</span> 
+                    <a class="person" href="http://en.wikipedia.org/wiki/{{this}}" target="_blank">{{this}}</a> 
                 {{/each}}
+                <label class="label">Release Date</label><span class="date">{{release}} ({{floor countdown}} days)</span>
+                <div class="links">
+                    <a href="#radar/{{index}}">Show on radar</a>
+                </div>
             </div>
         </div>
     </article> 
-    {{/each}}
+    {{/each_with_index}}
 </script>
 
 <script src="js/app.js"></script> 
 <script>
-    $(function(){
+    $(function() {
 
         MovieRadar.App.start();
     });

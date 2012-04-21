@@ -31,9 +31,9 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
         initialize: function() {
             
             var view = this;
-            dispatcher.on("list:show", function() {
+            dispatcher.on("list:show", function(index) {
 
-                view.makeVisible(view.el)
+                view.makeVisible(index ? '#movie-'+index : view.el);
             });
             dispatcher.on('movies:dataready', function(data) {
 
@@ -69,8 +69,8 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
 
         routes: {
             'welcome':  'welcome',
-            'list'   :  'list',
-            'radar'  :  'radar',
+            'list/:index'   :  'list',
+            'radar/:index'  :  'radar',
         },
 
         welcome: function() {
@@ -78,14 +78,14 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
             dispatcher.trigger('welcome:show');
         },
 
-        list: function() {
+        list: function(index) {
 
-            dispatcher.trigger('list:show');
+            dispatcher.trigger('list:show', index);
         },
 
-        radar: function(){
+        radar: function(index){
 
-            dispatcher.trigger('radar:show');
+            dispatcher.trigger('radar:show', index);
         }
     });
     
@@ -139,6 +139,11 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
         getMovies: function() {
 
             $.getJSON('Movies/all.json', function(data) {
+
+                data.movies = _.chain(data.movies)
+                    .map(function withCountdown(item) { return _.extend(item, { countdown : (new Date(item.release) - Date.now()) / (1000*60*60*24) }); })
+                    .sortBy('countdown')
+                    .value();
 
                 dispatcher.trigger('movies:dataready', data);
             });
