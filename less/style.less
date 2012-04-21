@@ -27,7 +27,7 @@ body {
     font-family: 'Lucida Console', 'Lucida Sans', 'Courier New', fixed;
     color: darken(#ffffff, 5%);
 
-    border: 1px solid black;
+    
     background-image: -webkit-gradient(linear, left center, right center, from(@scanner-near), to(@scanner-far));
     background-image: -webkit-linear-gradient(left, @scanner-near, @scanner-far);
     background-image: -moz-linear-gradient(left, @scanner-near, @scanner-far);
@@ -50,6 +50,11 @@ body {
             text-decoration: underline;
         }
     }
+
+    .timeline {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
 }
 
 .person {
@@ -63,3 +68,19 @@ body {
 /* LESS overrides */
 @linkColor: darken(@scanner-near, 10%);
 @linkColorHover: lighten(@linkColor, 10%);
+.hero-unit {
+ 
+}
+
+/* resets */
+.alert {
+
+    .label a {
+        color: darken(#ffffff, 5%);
+        text-decoration: none;
+    }
+    .label a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+    } 
+}

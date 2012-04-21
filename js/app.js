@@ -5,7 +5,7 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
 
     var dispatcher = _.clone(Backbone.Events);
 
-    var TemplatedView = {
+    var TemplatedView = Backbone.View.extend({
         makeVisible: function(selector) {
 
             if(selector === undefined)
@@ -14,7 +14,7 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
             var offset = $(selector).offset();
 
             $('html:not(:animated), body').animate({
-                scrollTop: offset.top -50,
+                scrollTop: offset.top -85,
                 scrollLeft: offset.left
             });
         },
@@ -24,10 +24,10 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
             var template = Handlebars.compile($(this.options.templateSelector).html());
             $(this.el).html(template(this.model||{}));
         }        
-    };
+    });
 
-    var WelcomeView = Backbone.View.extend(TemplatedView);
-    var ListView = Backbone.View.extend(_.extend(TemplatedView, {
+    var WelcomeView = TemplatedView.extend({});
+    var ListView = TemplatedView.extend({
         initialize: function() {
             
             var view = this;
@@ -41,8 +41,8 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
                 view.render();
             });
         }
-    }));
-    var RadarView = Backbone.View.extend(_.extend(TemplatedView, {
+    });
+    var RadarView = TemplatedView.extend({
         initialize: function() {
             
             var view = this;
@@ -50,13 +50,24 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
 
                 view.makeVisible(view.el);
             });
+            dispatcher.on("radar:scan", function() {
+
+                view.makeVisible(view.el);
+                view.render();
+            });
             dispatcher.on('movies:dataready', function(data) {
 
                 view.model = data;
-                view.render();
             });
+        },
+        render: function() {
+
+            $(this.el).fadeOut();
+            if(this.model) this.model.movies = _.shuffle(this.model.movies);
+            TemplatedView.prototype.render.call(this);
+            $(this.el).fadeIn();
         }
-    }));
+    });
 
     var Navigation = Backbone.Router.extend({
         initialize: function() {
@@ -68,9 +79,11 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
         },
 
         routes: {
-            'welcome':  'welcome',
+            'welcome'       :  'welcome',
+            'list'          :  'list',
             'list/:index'   :  'list',
-            'radar/:index'  :  'radar',
+            'scan'          :  'scan',
+            'radar/:index'  :  'radar'
         },
 
         welcome: function() {
@@ -81,6 +94,11 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
         list: function(index) {
 
             dispatcher.trigger('list:show', index);
+        },
+
+        scan: function() {
+
+            dispatcher.trigger('radar:scan');
         },
 
         radar: function(index){
@@ -142,6 +160,7 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
 
                 data.movies = _.chain(data.movies)
                     .map(function withCountdown(item) { return _.extend(item, { countdown : (new Date(item.release) - Date.now()) / (1000*60*60*24) }); })
+                    .reject(function(item) { return item.countdown <= 0; })
                     .sortBy('countdown')
                     .value();
 

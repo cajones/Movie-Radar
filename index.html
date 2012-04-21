@@ -41,12 +41,28 @@
 
     <div class="container">
 
+        <div class="alert fade in alert-success">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <strong>Hello!</strong>
+            <p>This site was build as a single page app to showcase MV* pattern and eventing. <br />
+                Backbone.js and Handlerbars.js are the frameworks used to separate the concerns of the views and the model. <br /> 
+                The entire source is available to view on <strong><a href="http://github.com/chrisjones0099/Movie-Radar/" target="_blank">Github</a></strong>.</p>
+            <p>Author: Chris Jones <span class="label label-success"><a href="http://chrisjones0099.github.com/cv" target="_blank">more</a></span></p>
+
+        </div>
         <section id="welcome-view"></section>
-        <hr/>
-        <section id="movie-radar-view"></section>
-        <hr/>
+        <section>
+            <div class="scanner">
+                <div class="timeline">
+                    <div class="pull-left"><strong>Now</strong></div>
+                    <div class="pull-right"><strong>2013</strong></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="movie-radar-view" />
+        </section>
         <section id="movie-list-view"></section>
         <hr />
+
     </div> <!-- /container -->
 
 <!-- libs -->
@@ -57,6 +73,10 @@
 <script>
     Handlebars.registerHelper('floor', function(value) {
         return Math.floor(value);
+    });
+    Handlebars.registerHelper('percentage', function(value, options) {
+        var max = options.hash["maximum"];
+        return (value/max)*100;
     });
     Handlebars.registerHelper("each_with_index", function(array, fn) {
         if(!array) return;
@@ -71,24 +91,23 @@
 </script>
 <script src="js/libs/underscore-min.js"></script>
 <script src="js/libs/backbone-min.js"></script>
+<script src="js/libs/bootstrap/alert.js"></script>
 <!-- /libs -->
 
 <!-- app -->
 <script id="welcome-view-template" type="text/x-handlebars-template">
     <div class="hero-unit">
-        <h1>Welcome to Movie-Radar</h1>
+        <h1>Welcome to Movie Radar</h1>
         <p>You like movies? So do we. Check out the latest movies in production for 2012 and feel the hype for this summers blockbusters.</p>
-        <p><a href="#radar" class="btn btn-primary btn-large">Scan for movies &raquo;</a></p>
+        <p><a href="#scan" class="btn btn-primary btn-large">Scan for movies &raquo;</a></p>
     </div>
 </script>
 <script id="movie-radar-view-template" type="text/x-handlebars-template">
-    <div class="scanner">
-        <ul>
-        {{#each_with_index movies}}
-            <li style="margin-left: {{floor countdown}}px;"><a href="#list/{{index}}">{{title}}</a></li>
-        {{/each_with_index}}
-        </ul>
-    </div>
+    <ul>
+    {{#each_with_index movies}}
+        <li style="margin-left: {{percentage countdown maximum="395"}}%;"><a href="#list/{{index}}">{{title}}</a></li>
+    {{/each_with_index}}
+    </ul>
 </script>
 
 <script id="movie-list-view-template" type="text/x-handlebars-template">
@@ -103,7 +122,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="span8">
+            <div class="span6">
                 <h3>{{title}}</h3>
                 <p>{{synopsis}}</p>
                 <label class="label">Director</label><a class="person" href="http://en.wikipedia.org/wiki/{{director}}" target="_blank">{{director}}</a> 
