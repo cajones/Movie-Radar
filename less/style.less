@@ -1,8 +1,8 @@
 @import "bootstrap/bootstrap.less";
 
 body {
-  padding-top: 60px;
-  padding-bottom: 40px;
+    padding-top: 60px;
+    padding-bottom: 40px;
 }
 
 @import "bootstrap/responsive.less";
@@ -18,7 +18,14 @@ body {
 @scanner-near: #1a6e05;
 @scanner-far: darken(@scanner-near, 50%);
 .scanner {
-    height: 230px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 32px;
+    
+    .border-radius(5px);
+
+    font-family: 'Lucida Console', 'Lucida Sans', 'Courier New', fixed;
+    color: darken(#ffffff, 5%);
 
     border: 1px solid black;
     background-image: -webkit-gradient(linear, left center, right center, from(@scanner-near), to(@scanner-far));
@@ -30,6 +37,14 @@ body {
     -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.75);
     -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.75);
     box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+
+    li {
+        cursor: pointer;
+    }
+}
+
+.person {
+    margin-right: 16px;
 }
 
 /* LESS overrides */
