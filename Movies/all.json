@@ -32,6 +32,103 @@
             "stars"    : ["Noomi Rapace", "Charlize Theron", "Patrick Wilson", "Idris Elba", "Guy Pearce"],
             "release"  : "6 June 2012",
             "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTk5OTY4MDQ2OV5BMl5BanBnXkFtZTcwMjU1MDYxNw@@._V1._SY317_.jpg"
+        },
+
+        {
+            "title"    : "American Reunion",
+            "synopsis" : "Jim, Michelle, Stifler, and their friends reunite in East Great Falls, Michigan for their high school reunion.",
+            "director" : "Jon Hurwitz",
+            "stars"    : [ "Jason Biggs", "Alyson Hannigan" ,"Seann William Scott"],
+            "release"  : "2 May 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTY4MTEyMzU1N15BMl5BanBnXkFtZTcwNDQ0NTc1Nw@@._V1._SY317_.jpg"
+        },
+        {
+            "title"    : "Red Tails",
+            "synopsis" : "A crew of African American pilots in the Tuskegee training program, having faced segregation while kept mostly on the ground during World War II, are called into duty under the guidance of Col. A.J. Bullard.",
+            "director" : "Anthony Hemingway",
+            "stars"    : ["Cuba Gooding Jr.", "Gerald McRaney", "David Oyelowo"],
+            "release"  : "6 June 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BNDQ5MTg2NzI4OF5BMl5BanBnXkFtZTcwMDM2NzQzNg@@._V1._SY317_CR0,0,214,317_.jpg"
+        },
+        {
+            "title"    : "Beauty and the Beast 3D",
+            "synopsis" : "Belle is a girl who is dissatisfied with life in a small provincial French town, constantly trying to fend off the misplaced \"affections\" of conceited Gaston. The Beast is a prince who was placed under a spell because he could not love. A wrong turn taken by Maurice, Belle's father, causes the two to meet.",
+            "director" : "Gary Trousdale",
+            "stars"    : ["Paige O'Hara", "Robby Benson", "Richard White", "Jerry Orbach", "David Ogden Stiers", "Angela Lansbury"],
+            "release"  : "4 May 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTc0MzM1Njk1OV5BMl5BanBnXkFtZTcwNjQxMTkwNw@@._V1._SY317_.jpg"
+        },
+        {
+            "title"    : "Snow White and the Huntsman",
+            "synopsis" : "In a twist to the fairy tale, the Huntsman ordered to take Snow White into the woods to be killed winds up becoming her protector and mentor in a quest to vanquish the Evil Queen.",
+            "director" : "Rupert Sanders",
+            "stars"    : [ "Kristen Stewart", "Chris Hemsworth", "Charlize Theron"],
+            "release"  : "14 May 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTQ1NDA0MTk5OV5BMl5BanBnXkFtZTcwMTM4NDMwNw@@._V1._SY317_.jpg"
+        },
+        {
+            "title"    : "Men in Black III",
+            "synopsis" : "Agent J travels in time to MIB's early years in the 1960s, to stop an alien from assassinating his friend Agent K and changing history.",
+            "director" : "Barry Sonnenfeld",
+            "stars"    : ["Will Smith", "Tommy Lee Jones", "Josh Brolin"],
+            "release"  : "25 May 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTA5MTMyNTQwMjVeQTJeQWpwZ15BbWU3MDExOTk2NDc@._V1._SY317_.jpg"
+        },
+        {
+            "title"    : "The Amazing Spider-Man",
+            "synopsis" : "Peter Parker finds a clue that might help him understand why his parents disappeared when he was young. His path puts him on a collision course with Dr. Curt Connors, his father's former partner.",
+            "director" : "Marc Webb",
+            "stars"    : ["Andrew Garfield", "Emma Stone", "Rhys Ifans"],
+            "release"  : "4 July 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTM5ODEwMTg3NV5BMl5BanBnXkFtZTcwMzIyNjg2Nw@@._V1._SY317_.jpg"
+        },
+        {
+            "title"    : "Django Unchained",
+            "synopsis" : "Django is a freed slave, who, under the tutelage of a German bounty hunter, becomes a bad-ass bounty hunter himself. After taking down some bad guys for profit, they track down Django's slave wife and liberate her from an evil plantation owner.",
+            "director" : "Quentin Tarantino",
+            "stars"    : [ "Jamie Foxx", "Don Johnson", "Leonardo DiCaprio"],
+            "release"  : "18 January 2013",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMjMxNjk2ODYyNF5BMl5BanBnXkFtZTcwMzQ0NjY2Nw@@._V1._SY317_.jpg"
+        },
+        {
+            "title"    : "Rise of the Guardians",
+            "synopsis" : "\"Rise of the Guardians\" tells the story of a group of well-known childhood heroes (Santa Claus, Easter Bunny, Tooth Fairy, Jack Frost and Sandman) – each with their own extraordinary abilities. When an evil spirit known as Pitch (also known as The Boogeyman) lays down the gauntlet to take over the world, the immortal Guardians must join forces for the first time to protect the hopes, beliefs and imagination of children all over the world.",
+            "director" : "Peter Ramsey",
+            "stars"    : ["Hugh Jackman", "Alec Baldwin", "Isla Fisher"],
+            "release"  : "30 November 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMjI5MDgyMDU1MV5BMl5BanBnXkFtZTcwMjk4NjgxNw@@._V1._SY317_.jpg"
+        },
+        {
+            "title"    : "Skyfall",
+            "synopsis" : "Bond's loyalty to M is tested as her past comes back to haunt her. As MI6 comes under attack, 007 must track down and destroy the threat, no matter how personal the cost.",
+            "director" : "Sam Mendes",
+            "stars"    : ["Daniel Craig", "Helen McCrory", "Javier Bardem"],
+            "release"  : "26 October 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTczMjQ5NjE4NV5BMl5BanBnXkFtZTcwMjk0NjAwNw@@._V1._SY317_CR1,0,214,317_.jpg"
+        },
+        {
+            "title"    : "Ice Age: Continental Drift",
+            "synopsis" : "Manny, Diego, and Sid embark upon another adventure after their continent is set adrift. Using an iceberg as a ship, they encounter sea creatures and battle pirates as they explore a new world.",
+            "director" : "Steve Martino",
+            "stars"    : [ "Ray Romano", "Denis Leary", "John Leguizamo"],
+            "release"  : "13 July 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTQwMjU3NzI2NV5BMl5BanBnXkFtZTcwMTg1OTY5Ng@@._V1._SY317_CR0,0,214,317_.jpg"
+        },
+        {
+            "title"    : "Ted",
+            "synopsis" : "Follows John Bennett (Mark Wahlberg), a grown man who must deal with the cherished teddy bear who came to life as the result of a childhood wish...and has refused to leave his side ever since.",
+            "director" : "Seth MacFarlane",
+            "stars"    : ["Mark Wahlberg", "Mila Kunis", "Seth MacFarlane"],
+            "release"  : "3 August 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMjE2MTU5NjA1NV5BMl5BanBnXkFtZTcwNTI5NTI2Nw@@._V1._SY317_.jpg"
+        },
+        {
+            "title"    : "Iron Sky",
+            "synopsis" : "The Nazis set up a secret base on the moon in 1945 where they hide out and plan to return to power in 2018.",
+            "director" : "Timo Vuorensola",
+            "stars"    : ["Julia Dietze", "Udo Kier", "Peta Sergeant"],
+            "release"  : "4 April 2012",
+            "poster"   : "http://ia.media-imdb.com/images/M/MV5BMTQyNzM3OTgzOV5BMl5BanBnXkFtZTcwMjI0MzI0Nw@@._V1._SY317_CR0,0,214,317_.jpg"
         }
     ]
 }

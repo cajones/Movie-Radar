@@ -26,7 +26,16 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
         }        
     });
 
-    var WelcomeView = TemplatedView.extend({});
+    var WelcomeView = TemplatedView.extend({
+        initialize: function() {
+            
+            var view = this;
+            dispatcher.on("welcome:show", function() {
+
+                view.makeVisible(view.el);
+            });
+        }
+    });
     var ListView = TemplatedView.extend({
         initialize: function() {
             
@@ -44,7 +53,9 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
     });
     var RadarView = TemplatedView.extend({
         initialize: function() {
-            
+
+            this.options = _.defaults(this.options, { itemSelector : 'li' });
+
             var view = this;
             dispatcher.on("radar:show", function() {
 
@@ -62,10 +73,24 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
         },
         render: function() {
 
-            $(this.el).fadeOut();
-            if(this.model) this.model.movies = _.shuffle(this.model.movies);
-            TemplatedView.prototype.render.call(this);
-            $(this.el).fadeIn();
+            var view = this;
+            $(view.el).fadeOut(function() {
+
+                TemplatedView.prototype.render.call(view);
+                view.$('li').hide();
+                $(view.el).show();
+
+                view.renderItems();    
+            });
+            
+        },
+
+        renderItems: function() {
+            _.chain(this.$(this.options.itemSelector))
+                .shuffle()
+                .each(function(item, i) {
+                    $(item).delay(i * 600).fadeIn();
+                });
         }
     });
 
@@ -158,9 +183,12 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
 
             $.getJSON('Movies/all.json', function(data) {
 
+                var twoWeeksAgo = -14;
+                var millisecondsPerDay = 1000*60*60*24;
+
                 data.movies = _.chain(data.movies)
-                    .map(function withCountdown(item) { return _.extend(item, { countdown : (new Date(item.release) - Date.now()) / (1000*60*60*24) }); })
-                    .reject(function(item) { return item.countdown <= 0; })
+                    .map(function withCountdown(item) { return _.extend(item, { countdown : (new Date(item.release) - Date.now()) / millisecondsPerDay }); })
+                    .reject(function(item) { return item.countdown <= twoWeeksAgo; })
                     .sortBy('countdown')
                     .value();
 

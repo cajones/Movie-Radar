@@ -32,7 +32,9 @@
                 <a class="brand" href="#">Movie-Radar 2012</a>
                 <div class="nav-collapse">
                     <ul class="nav">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li class="active"><a href="/#welcome">Home</a></li>
+                        <li><a href="/#scan">Radar</a></li>
+                        <li><a href="/#list/1">List of Movies</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -42,12 +44,13 @@
     <div class="container">
 
         <div class="alert fade in alert-success">
-            <a class="close" data-dismiss="alert" href="#">&times;</a>
-            <strong>Hello!</strong>
-            <p>This site was build as a single page app to showcase MV* pattern and eventing. <br />
-                Backbone.js and Handlerbars.js are the frameworks used to separate the concerns of the views and the model. <br /> 
-                The entire source is available to view on <strong><a href="http://github.com/chrisjones0099/Movie-Radar/" target="_blank">Github</a></strong>.</p>
-            <p>Author: Chris Jones <span class="label label-success"><a href="http://chrisjones0099.github.com/cv" target="_blank">more</a></span></p>
+            
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+                <strong>Hello!</strong>
+                <p>This site was build as a single page app to showcase MV* pattern and eventing. <br />
+                    Backbone.js and Handlerbars.js are the frameworks used to separate the concerns of the views and the model. <br /> 
+                    The entire source is available to view on <strong><a href="http://github.com/chrisjones0099/Movie-Radar/" target="_blank">Github</a></strong>.</p>
+                <p>Author: Chris Jones <span class="label label-success"><a href="http://chrisjones0099.github.com/cv" target="_blank">more</a></span></p>
 
         </div>
         <section id="welcome-view"></section>
@@ -97,9 +100,16 @@
 <!-- app -->
 <script id="welcome-view-template" type="text/x-handlebars-template">
     <div class="hero-unit">
-        <h1>Welcome to Movie Radar</h1>
-        <p>You like movies? So do we. Check out the latest movies in production for 2012 and feel the hype for this summers blockbusters.</p>
-        <p><a href="#scan" class="btn btn-primary btn-large">Scan for movies &raquo;</a></p>
+        <div class="row">
+            <div class="span2">
+                <img src="img/radar_graphic.jpg" height="170" width="170" />
+            </div>
+            <div class="span8">
+                <h1>Welcome to Movie Radar</h1>
+                <p>You like movies? So do we. Check out the latest movies in production for 2012 and feel the hype for this summers blockbusters.</p>
+                <p><a href="#scan" class="btn btn-primary btn-large">Scan for movies &raquo;</a></p>
+            </div>
+        </div>
     </div>
 </script>
 <script id="movie-radar-view-template" type="text/x-handlebars-template">
