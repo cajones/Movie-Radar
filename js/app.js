@@ -13,7 +13,7 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
 
             var offset = $(selector).offset();
 
-            logger.log('Offset TL - ' + offset);
+            logger.log('Offset T - ' + offset.top);
             $('html:not(:animated), body').animate({
                 scrollTop: offset.top -85,
                 scrollLeft: offset.left
