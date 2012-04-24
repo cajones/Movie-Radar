@@ -11,13 +11,16 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
             if(selector === undefined)
                 selector = this.el;
 
-            var offset = $(selector).offset();
+            if($.scrollTo) $.scrollTo(selector, {duration:800, offset:{top:-85}});
+            else {
+                var offset = $(selector).offset();
             
-            logger.log('Offset TL - ' + offset);
-            $('html:not(:animated), body').animate({
-                scrollTop: offset.top -85,
-                scrollLeft: offset.left
-            });
+                logger.log('Offset TL - ' + offset);
+                $('html:not(:animated), body').animate({
+                    scrollTop: offset.top -85,
+                    scrollLeft: offset.left
+                });    
+            }
         },
     
         render: function() {
