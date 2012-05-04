@@ -2,53 +2,54 @@ var root = window;
 
 root.MovieRadar = root.MovieRadar || {};
 root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
+    "use strict";
+    var dispatcher = _.clone(Backbone.Events),
+        TemplatedView = Backbone.View.extend({
+            makeVisible: function (selector) {
 
-    var dispatcher = _.clone(Backbone.Events);
+                if (selector === undefined) {
+                    selector = this.el;
+                }
 
-    var TemplatedView = Backbone.View.extend({
-        makeVisible: function(selector) {
+                if ($.scrollTo) {
+                    $.scrollTo(selector, {duration: 800, offset: {top: -85}});
+                } else {
+                    var offset = $(selector).offset();
 
-            if(selector === undefined)
-                selector = this.el;
+                    logger.log('Offset TL - ' + offset);
+                    $('html:not(:animated), body').animate({
+                        scrollTop: offset.top - 85,
+                        scrollLeft: offset.left
+                    });
+                }
+            },
 
-            if($.scrollTo) $.scrollTo(selector, {duration:800, offset:{top:-85}});
-            else {
-                var offset = $(selector).offset();
-            
-                logger.log('Offset TL - ' + offset);
-                $('html:not(:animated), body').animate({
-                    scrollTop: offset.top -85,
-                    scrollLeft: offset.left
-                });    
+            render: function () {
+
+                var template = Handlebars.compile($(this.options.templateSelector).html());
+                $(this.el).html(template(this.model || {}));
             }
-        },
-    
-        render: function() {
-            
-            var template = Handlebars.compile($(this.options.templateSelector).html());
-            $(this.el).html(template(this.model||{}));
-        }        
-    });
+        });
 
     var WelcomeView = TemplatedView.extend({
-        initialize: function() {
-            
+        initialize: function () {
+
             var view = this;
-            dispatcher.on("welcome:show", function() {
+            dispatcher.on("welcome:show", function () {
 
                 view.makeVisible(view.el);
             });
         }
     });
     var ListView = TemplatedView.extend({
-        initialize: function() {
-            
-            var view = this;
-            dispatcher.on("list:show", function(index) {
+        initialize: function () {
 
-                view.makeVisible(index ? '#movie-'+index : view.el);
+            var view = this;
+            dispatcher.on("list:show", function (index) {
+
+                view.makeVisible(index ? '#movie-' + index : view.el);
             });
-            dispatcher.on('movies:dataready', function(data) {
+            dispatcher.on('movies:dataready', function (data) {
 
                 view.model = data;
                 view.render();
@@ -56,55 +57,55 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
         }
     });
     var RadarView = TemplatedView.extend({
-        initialize: function() {
+        initialize: function () {
 
             this.options = _.defaults(this.options, { itemSelector : 'li' });
 
             var view = this;
-            dispatcher.on("radar:show", function() {
+            dispatcher.on("radar:show", function () {
 
                 view.makeVisible(view.el);
             });
-            dispatcher.on("radar:scan", function() {
+            dispatcher.on("radar:scan", function () {
 
                 view.makeVisible(view.el);
                 view.render();
             });
-            dispatcher.on('movies:dataready', function(data) {
+            dispatcher.on('movies:dataready', function (data) {
 
                 view.model = data;
             });
         },
-        render: function() {
+        render: function () {
 
             var view = this;
-            $(view.el).fadeOut(function() {
+            $(view.el).fadeOut(function () {
 
                 TemplatedView.prototype.render.call(view);
                 view.$('li').hide();
                 $(view.el).show();
 
-                view.renderItems();    
+                view.renderItems();
             });
-            
+
         },
 
-        renderItems: function() {
+        renderItems: function () {
             _.chain(this.$(this.options.itemSelector))
                 .shuffle()
-                .each(function(item, i) {
+                .each(function (item, i) {
                     $(item).delay(i * 600).fadeIn();
                 });
         }
     });
 
     var Navigation = Backbone.Router.extend({
-        initialize: function() {
-            
-            dispatcher.on("app:ready", function() {
+        initialize: function () {
 
-                Backbone.history.start();    
-            })
+            dispatcher.on("app:ready", function () {
+
+                Backbone.history.start();
+            });
         },
 
         routes: {
@@ -115,35 +116,35 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
             'radar/:index'  :  'radar'
         },
 
-        welcome: function() {
+        welcome: function () {
 
             dispatcher.trigger('welcome:show');
         },
 
-        list: function(index) {
+        list: function (index) {
 
             dispatcher.trigger('list:show', index);
         },
 
-        scan: function() {
+        scan: function () {
 
             dispatcher.trigger('radar:scan');
         },
 
-        radar: function(index){
+        radar: function (index) {
 
             dispatcher.trigger('radar:show', index);
         }
     });
-    
+
     return {
-        start: function() {
-    
+        start: function () {
+
             logger.log('Movie Radar App started.');
             var nav = new Navigation();
 
             this.initialiseWelcome();
-    
+
             this.initialiseRadar();
 
             this.initialiseList();
@@ -153,7 +154,7 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
             dispatcher.trigger("app:ready");
         },
 
-        initialiseWelcome: function() {
+        initialiseWelcome: function () {
 
             var welcomeView = new WelcomeView({
                 templateSelector: '#welcome-view-template'
@@ -163,7 +164,7 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
             logger.log('Welcome initialised.');
         },
 
-        initialiseRadar: function() {
+        initialiseRadar: function () {
 
             var radarView = new RadarView({
                 templateSelector : '#movie-radar-view-template'
@@ -173,7 +174,7 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
             logger.log('Movie Radar initialised.');
         },
 
-        initialiseList: function() {
+        initialiseList: function () {
 
             var listView = new ListView({
                 templateSelector: '#movie-list-view-template'
@@ -183,16 +184,16 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
             logger.log('Movie List initialised.');
         },
 
-        getMovies: function() {
+        getMovies: function () {
 
-            $.getJSON('Movies/all.json', function(data) {
+            $.getJSON('Movies/all.json', function (data) {
 
                 var twoWeeksAgo = -14;
-                var millisecondsPerDay = 1000*60*60*24;
+                var millisecondsPerDay = 1000 * 60 * 60 * 24;
 
                 data.movies = _.chain(data.movies)
                     .map(function withCountdown(item) { return _.extend(item, { countdown : (new Date(item.release) - Date.now()) / millisecondsPerDay }); })
-                    .reject(function(item) { return item.countdown <= twoWeeksAgo; })
+                    .reject(function (item) { return item.countdown <= twoWeeksAgo; })
                     .sortBy('countdown')
                     .value();
 
@@ -201,4 +202,4 @@ root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
         }
 
     };
-})(jQuery, _, Backbone, Handlebars, console);
+}(jQuery, _, Backbone, Handlebars, console));
