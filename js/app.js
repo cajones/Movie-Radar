@@ -2,204 +2,206 @@ var root = window;
 
 root.MovieRadar = root.MovieRadar || {};
 root.MovieRadar.App = (function ($, _, Backbone, Handlebars, logger) {
-    "use strict";
-    var dispatcher = _.clone(Backbone.Events),
-        TemplatedView = Backbone.View.extend({
-            makeVisible: function (selector) {
+	"use strict";
+	var dispatcher = _.clone(Backbone.Events),
+		TemplatedView = Backbone.View.extend({
+			makeVisible: function (selector) {
 
-                if (selector === undefined) {
-                    selector = this.el;
-                }
+				if (selector === undefined) {
+					selector = this.el;
+				}
 
-                if ($.scrollTo) {
-                    $.scrollTo(selector, {duration: 800, offset: {top: -85}});
-                } else {
-                    var offset = $(selector).offset();
+				if ($.scrollTo) {
+					$.scrollTo(selector, {duration: 800, offset: {top: -85}});
+				} else {
+					var offset = $(selector).offset();
 
-                    logger.log('Offset TL - ' + offset);
-                    $('html:not(:animated), body').animate({
-                        scrollTop: offset.top - 85,
-                        scrollLeft: offset.left
-                    });
-                }
-            },
+					logger.log('Offset TL - ' + offset);
+					$('html:not(:animated), body').animate({
+						scrollTop: offset.top - 85,
+						scrollLeft: offset.left
+					});
+				}
+			},
 
-            render: function () {
+			render: function () {
 
-                var template = Handlebars.compile($(this.options.templateSelector).html());
-                $(this.el).html(template(this.model || {}));
-            }
-        });
+				var template = Handlebars.compile($(this.options.templateSelector).html());
+				$(this.el).html(template(this.model || {}));
+			}
+		});
 
-    var WelcomeView = TemplatedView.extend({
-        initialize: function () {
+	var WelcomeView = TemplatedView.extend({
+		initialize: function () {
 
-            var view = this;
-            dispatcher.on("welcome:show", function () {
+			var view = this;
+			dispatcher.on("welcome:show", function () {
 
-                view.makeVisible(view.el);
-            });
-        }
-    });
-    var ListView = TemplatedView.extend({
-        initialize: function () {
+				view.makeVisible(view.el);
+			});
+		}
+	});
 
-            var view = this;
-            dispatcher.on("list:show", function (index) {
+	var ListView = TemplatedView.extend({
+		initialize: function () {
 
-                view.makeVisible(index ? '#movie-' + index : view.el);
-            });
-            dispatcher.on('movies:dataready', function (data) {
+			var view = this;
+			dispatcher.on("list:show", function (index) {
 
-                view.model = data;
-                view.render();
-            });
-        }
-    });
-    var RadarView = TemplatedView.extend({
-        initialize: function () {
+				view.makeVisible(index ? '#movie-' + index : view.el);
+			});
+			dispatcher.on('movies:dataready', function (data) {
 
-            this.options = _.defaults(this.options, { itemSelector : 'li' });
+				view.model = data;
+				view.render();
+			});
+		}
+	});
+	
+	var RadarView = TemplatedView.extend({
+		initialize: function () {
 
-            var view = this;
-            dispatcher.on("radar:show", function () {
+			this.options = _.defaults(this.options, { itemSelector : 'li' });
 
-                view.makeVisible(view.el);
-            });
-            dispatcher.on("radar:scan", function () {
+			var view = this;
+			dispatcher.on("radar:show", function () {
 
-                view.makeVisible(view.el);
-                view.render();
-            });
-            dispatcher.on('movies:dataready', function (data) {
+				view.makeVisible(view.el);
+			});
+			dispatcher.on("radar:scan", function () {
 
-                view.model = data;
-            });
-        },
-        render: function () {
+				view.makeVisible(view.el);
+				view.render();
+			});
+			dispatcher.on('movies:dataready', function (data) {
 
-            var view = this;
-            $(view.el).fadeOut(function () {
+				view.model = data;
+			});
+		},
+		render: function () {
 
-                TemplatedView.prototype.render.call(view);
-                view.$('li').hide();
-                $(view.el).show();
+			var view = this;
+			$(view.el).fadeOut(function () {
 
-                view.renderItems();
-            });
+				TemplatedView.prototype.render.call(view);
+				view.$('li').hide();
+				$(view.el).show();
 
-        },
+				view.renderItems();
+			});
 
-        renderItems: function () {
-            _.chain(this.$(this.options.itemSelector))
-                .shuffle()
-                .each(function (item, i) {
-                    $(item).delay(i * 600).fadeIn();
-                });
-        }
-    });
+		},
 
-    var Navigation = Backbone.Router.extend({
-        initialize: function () {
+		renderItems: function () {
+			_.chain(this.$(this.options.itemSelector))
+				.shuffle()
+				.each(function (item, i) {
+					$(item).delay(i * 600).fadeIn();
+				});
+		}
+	});
 
-            dispatcher.on("app:ready", function () {
+	var Navigation = Backbone.Router.extend({
+		initialize: function () {
 
-                Backbone.history.start();
-            });
-        },
+			dispatcher.on("app:ready", function () {
 
-        routes: {
-            'welcome'       :  'welcome',
-            'list'          :  'list',
-            'list/:index'   :  'list',
-            'scan'          :  'scan',
-            'radar/:index'  :  'radar'
-        },
+				Backbone.history.start();
+			});
+		},
 
-        welcome: function () {
+		routes: {
+			'welcome'       :  'welcome',
+			'list'          :  'list',
+			'list/:index'   :  'list',
+			'scan'          :  'scan',
+			'radar/:index'  :  'radar'
+		},
 
-            dispatcher.trigger('welcome:show');
-        },
+		welcome: function () {
 
-        list: function (index) {
+			dispatcher.trigger('welcome:show');
+		},
 
-            dispatcher.trigger('list:show', index);
-        },
+		list: function (index) {
 
-        scan: function () {
+			dispatcher.trigger('list:show', index);
+		},
 
-            dispatcher.trigger('radar:scan');
-        },
+		scan: function () {
 
-        radar: function (index) {
+			dispatcher.trigger('radar:scan');
+		},
 
-            dispatcher.trigger('radar:show', index);
-        }
-    });
+		radar: function (index) {
 
-    return {
-        start: function () {
+			dispatcher.trigger('radar:show', index);
+		}
+	});
 
-            logger.log('Movie Radar App started.');
-            var nav = new Navigation();
+	return {
+		start: function () {
 
-            this.initialiseWelcome();
+			logger.log('Movie Radar App started.');
+			var nav = new Navigation();
 
-            this.initialiseRadar();
+			this.initialiseWelcome();
 
-            this.initialiseList();
+			this.initialiseRadar();
 
-            this.getMovies();
+			this.initialiseList();
 
-            dispatcher.trigger("app:ready");
-        },
+			this.getMovies();
 
-        initialiseWelcome: function () {
+			dispatcher.trigger("app:ready");
+		},
 
-            var welcomeView = new WelcomeView({
-                templateSelector: '#welcome-view-template'
-            });
-            welcomeView.render();
-            $('#welcome-view').html(welcomeView.el);
-            logger.log('Welcome initialised.');
-        },
+		initialiseWelcome: function () {
 
-        initialiseRadar: function () {
+			var welcomeView = new WelcomeView({
+				templateSelector: '#welcome-view-template'
+			});
+			welcomeView.render();
+			$('#welcome-view').html(welcomeView.el);
+			logger.log('Welcome initialised.');
+		},
 
-            var radarView = new RadarView({
-                templateSelector : '#movie-radar-view-template'
-            });
-            radarView.render();
-            $('#movie-radar-view').html(radarView.el);
-            logger.log('Movie Radar initialised.');
-        },
+		initialiseRadar: function () {
 
-        initialiseList: function () {
+			var radarView = new RadarView({
+				templateSelector : '#movie-radar-view-template'
+			});
+			radarView.render();
+			$('#movie-radar-view').html(radarView.el);
+			logger.log('Movie Radar initialised.');
+		},
 
-            var listView = new ListView({
-                templateSelector: '#movie-list-view-template'
-            });
-            listView.render();
-            $('#movie-list-view').html(listView.el);
-            logger.log('Movie List initialised.');
-        },
+		initialiseList: function () {
 
-        getMovies: function () {
+			var listView = new ListView({
+				templateSelector: '#movie-list-view-template'
+			});
+			listView.render();
+			$('#movie-list-view').html(listView.el);
+			logger.log('Movie List initialised.');
+		},
 
-            $.getJSON('Movies/all.json', function (data) {
+		getMovies: function () {
 
-                var twoWeeksAgo = -14;
-                var millisecondsPerDay = 1000 * 60 * 60 * 24;
+			$.getJSON('Movies/all.json', function (data) {
 
-                data.movies = _.chain(data.movies)
-                    .map(function withCountdown(item) { return _.extend(item, { countdown : (new Date(item.release) - Date.now()) / millisecondsPerDay }); })
-                    .reject(function (item) { return item.countdown <= twoWeeksAgo; })
-                    .sortBy('countdown')
-                    .value();
+				var twoWeeksAgo = -14;
+				var millisecondsPerDay = 1000 * 60 * 60 * 24;
 
-                dispatcher.trigger('movies:dataready', data);
-            });
-        }
+				data.movies = _.chain(data.movies)
+					.map(function withCountdown(item) { return _.extend(item, { countdown : (new Date(item.release) - Date.now()) / millisecondsPerDay }); })
+					.reject(function (item) { return item.countdown <= twoWeeksAgo; })
+					.sortBy('countdown')
+					.value();
 
-    };
+				dispatcher.trigger('movies:dataready', data);
+			});
+		}
+
+	};
 }(jQuery, _, Backbone, Handlebars, console));
